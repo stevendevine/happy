@@ -36,13 +36,12 @@ set :deploy_to, "/home/tree/public/happy"
 
 namespace :deploy do
 
-  after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-      # Here we can do anything such as:
-      # within release_path do
-      #   execute :rake, 'cache:clear'
-      # end
+  namespace :php_fpm do
+    desc "Restart PHP5-FPM (requires sudo access to /usr/sbin/service php5-fpm restart)"
+    task :restart, :roles => :app do
+      cap php5fpm:restart
     end
   end
 
+  after 'deploy', 'php_fpm:restart'
 end
