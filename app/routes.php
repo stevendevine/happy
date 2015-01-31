@@ -16,7 +16,7 @@ Route::get('/', function()
 	return View::make('hello');
 });
 
-Route::get('/asdf', function()
+Route::get('/qwerty', function()
 {
   return View::make('hello');
 });
