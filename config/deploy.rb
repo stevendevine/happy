@@ -32,16 +32,17 @@ set :deploy_to, "/home/tree/public/happy"
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 
 # Default value for keep_releases is 5
-# set :keep_releases, 5
+set :keep_releases, 2
 
-namespace :deploy do
+namespace :deploy do  
 
-  namespace :php_fpm do
-    desc "Restart PHP5-FPM (requires sudo access to /usr/sbin/service php5-fpm restart)"
-    task :restart, :roles => :app do
-      cap php5fpm:restart
+  desc 'Restart application'
+  task :restart do
+    on roles(:app), in: :sequence, wait: 5 do
+      execute "sudo service php5-fpm restart"  ## -> line you should add
     end
   end
 
-  after 'deploy', 'php_fpm:restart'
+  after :deploy, :restart
+
 end
