@@ -39,14 +39,18 @@ namespace :deploy do
   desc 'Make artisan executable'
   task :artisan do
     on roles(:app), in: :sequence, wait: 5 do
-      execute :chmod, "u+x artisan"  
+      within release_path do
+        execute :chmod, "u+x artisan"  
+      end
     end
   end
 
   desc 'Run migrations (if applicable)'
   task :migrate do
     on roles(:app), in: :sequence, wait: 5 do
-      execute "php artisan migrate"  
+      within release_path do
+        execute "php artisan migrate"  
+      end
     end
   end
 
