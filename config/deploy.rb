@@ -50,6 +50,7 @@ namespace :deploy do
     end
   end
 
+  after :deploy, :migrate
   after :deploy, :restart
 
 end
