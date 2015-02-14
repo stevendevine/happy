@@ -36,6 +36,13 @@ set :keep_releases, 2
 
 namespace :deploy do  
 
+  desc 'Run migrations (if applicable)'
+  task :migrate do
+    on roles(:app), in: :sequence, wait: 5 do
+      execute "php artisan migrate"  ## -> line you should add
+    end
+  end
+
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
