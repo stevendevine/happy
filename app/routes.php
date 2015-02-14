@@ -11,12 +11,5 @@
 |
 */
 
-Route::get('/', function()
-{
-	return View::make('hello');
-});
-
-Route::get('/qwerty', function()
-{
-  return View::make('hello');
-});
+Route::get('/', "EntryController@index");
+Route::resource("entry", "EntryController");
