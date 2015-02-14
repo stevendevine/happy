@@ -39,7 +39,7 @@ namespace :deploy do
   desc 'Make artisan executable'
   task :artisan do
     on roles(:app), in: :sequence, wait: 5 do
-      execute "chmod u+x artisan"  
+      execute :chmod, "u+x artisan"  
     end
   end
 
