@@ -36,20 +36,28 @@ set :keep_releases, 2
 
 namespace :deploy do  
 
+  desc 'Make artisan executable'
+  task :artisan do
+    on roles(:app), in: :sequence, wait: 5 do
+      execute "chmod +x artisan"  
+    end
+  end
+
   desc 'Run migrations (if applicable)'
   task :migrate do
     on roles(:app), in: :sequence, wait: 5 do
-      execute "php artisan migrate"  ## -> line you should add
+      execute "php artisan migrate"  
     end
   end
 
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
-      execute "sudo service php5-fpm restart"  ## -> line you should add
+      execute "sudo service php5-fpm restart"  
     end
   end
 
+  after :deploy, :artisan
   after :deploy, :migrate
   after :deploy, :restart
 
